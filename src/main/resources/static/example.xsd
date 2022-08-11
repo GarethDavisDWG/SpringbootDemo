@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+    <xs:element name="collection">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="description"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="recipe"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="description" type="any"/>
+    <xs:element name="recipe">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="title"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="ingredient"/>
+                <xs:element ref="preparation"/>
+                <xs:element minOccurs="0" ref="comment"/>
+                <xs:element ref="nutrition"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="title" type="xs:string"/>
+    <xs:element name="ingredient">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="ingredient"/>
+                <xs:element minOccurs="0" ref="preparation"/>
+            </xs:sequence>
+            <xs:attributeGroup ref="attlist.ingredient"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.ingredient">
+        <xs:attribute name="name" use="required"/>
+        <xs:attribute name="amount"/>
+        <xs:attribute name="unit"/>
+    </xs:attributeGroup>
+    <xs:element name="preparation">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="step"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="step" type="xs:string"/>
+    <xs:element name="comment" type="xs:string"/>
+    <xs:element name="nutrition">
+        <xs:complexType>
+            <xs:attributeGroup ref="attlist.nutrition"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:attributeGroup name="attlist.nutrition">
+        <xs:attribute name="protein" use="required"/>
+        <xs:attribute name="carbohydrates" use="required"/>
+        <xs:attribute name="fat" use="required"/>
+        <xs:attribute name="calories" use="required"/>
+        <xs:attribute name="alcohol"/>
+    </xs:attributeGroup>
+    <xs:complexType name="any" mixed="true">
+        <xs:sequence>
+            <xs:any minOccurs="0" maxOccurs="unbounded" processContents="strict"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

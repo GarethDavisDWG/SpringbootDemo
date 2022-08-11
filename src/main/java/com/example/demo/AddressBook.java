@@ -26,4 +26,13 @@ public class AddressBook {
         return  json;
     }
 
+    public void addContact(Contact c){
+        this.addressBook.add(c);
+    }
+
+    public void changeContact(int id,Contact c){
+        this.addressBook.set(id,c);
+    }
+
+
 }

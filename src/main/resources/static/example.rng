@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+    <define name="collection">
+        <element name="collection">
+            <ref name="attlist.collection"/>
+            <ref name="description"/>
+            <zeroOrMore>
+                <ref name="recipe"/>
+            </zeroOrMore>
+        </element>
+    </define>
+    <define name="attlist.collection" combine="interleave">
+        <empty/>
+    </define>
+    <define name="description">
+        <element name="description">
+            <ref name="attlist.description"/>
+            <ref name="any"/>
+        </element>
+    </define>
+    <define name="attlist.description" combine="interleave">
+        <empty/>
+    </define>
+    <define name="recipe">
+        <element name="recipe">
+            <ref name="attlist.recipe"/>
+            <ref name="title"/>
+            <zeroOrMore>
+                <ref name="ingredient"/>
+            </zeroOrMore>
+            <ref name="preparation"/>
+            <optional>
+                <ref name="comment"/>
+            </optional>
+            <ref name="nutrition"/>
+        </element>
+    </define>
+    <define name="attlist.recipe" combine="interleave">
+        <empty/>
+    </define>
+    <define name="title">
+        <element name="title">
+            <ref name="attlist.title"/>
+            <text/>
+        </element>
+    </define>
+    <define name="attlist.title" combine="interleave">
+        <empty/>
+    </define>
+    <define name="ingredient">
+        <element name="ingredient">
+            <ref name="attlist.ingredient"/>
+            <zeroOrMore>
+                <ref name="ingredient"/>
+            </zeroOrMore>
+            <optional>
+                <ref name="preparation"/>
+            </optional>
+        </element>
+    </define>
+    <define name="attlist.ingredient" combine="interleave">
+        <attribute name="name"/>
+        <optional>
+            <attribute name="amount"/>
+        </optional>
+        <optional>
+            <attribute name="unit"/>
+        </optional>
+    </define>
+    <define name="preparation">
+        <element name="preparation">
+            <ref name="attlist.preparation"/>
+            <zeroOrMore>
+                <ref name="step"/>
+            </zeroOrMore>
+        </element>
+    </define>
+    <define name="attlist.preparation" combine="interleave">
+        <empty/>
+    </define>
+    <define name="step">
+        <element name="step">
+            <ref name="attlist.step"/>
+            <text/>
+        </element>
+    </define>
+    <define name="attlist.step" combine="interleave">
+        <empty/>
+    </define>
+    <define name="comment">
+        <element name="comment">
+            <ref name="attlist.comment"/>
+            <text/>
+        </element>
+    </define>
+    <define name="attlist.comment" combine="interleave">
+        <empty/>
+    </define>
+    <define name="nutrition">
+        <element name="nutrition">
+            <ref name="attlist.nutrition"/>
+            <empty/>
+        </element>
+    </define>
+    <define name="attlist.nutrition" combine="interleave">
+        <attribute name="protein"/>
+        <attribute name="carbohydrates"/>
+        <attribute name="fat"/>
+        <attribute name="calories"/>
+        <optional>
+            <attribute name="alcohol"/>
+        </optional>
+    </define>
+    <start>
+        <choice>
+            <ref name="collection"/>
+        </choice>
+    </start>
+    <define name="any">
+        <zeroOrMore>
+            <choice>
+                <element>
+                    <anyName/>
+                    <zeroOrMore>
+                        <attribute>
+                            <anyName/>
+                        </attribute>
+                    </zeroOrMore>
+                    <ref name="any"/>
+                </element>
+                <text/>
+            </choice>
+        </zeroOrMore>
+    </define>
+</grammar>
